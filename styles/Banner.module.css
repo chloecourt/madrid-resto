@@ -5,13 +5,13 @@
 .title {
   letter-spacing: -0.025em;
   font-weight: 800;
-  color: var(--text-black);
+  color: var(--text-white-100);
   font-size: 3rem;
   line-heigth: 1;
 }
 
 .title1 {
-  color: rgba(249, 250, 251, 1);
+  color: var(--text-pink);
 }
 
 .title2 {
@@ -23,7 +23,7 @@
   margin-top: 0.75rem;
   font-size: 1.5rem;
   line-height: 2rem;
-  color: var(--text-white-100);
+  color: var(--text-pink);
 }
 
 .buttonWrapper {
@@ -31,7 +31,7 @@
 }
 
 .button {
-  background: var(--text-pink);
+  background: var(--text-white-100);
   cursor: pointer;
   outline: 0;
   border: 0px;
@@ -40,7 +40,7 @@
   line-height: 1.75rem;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
-  color: var(--text-white-100);
+  color: var(--text-purple);
 }
 
 .button:hover {
