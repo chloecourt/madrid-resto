@@ -13,9 +13,11 @@ const Banner = ({ handleOnClick }: BannerType) => {
         <span className={styles.title2}>Madrid</span>
       </h1>
       <p className={styles.subTitle}>discover local must-try restaurants!</p>
-      <button className={styles.button} onClick={handleOnClick}>
-        View stores nearby
-      </button>
+      <div className={styles.buttonWrapper}>
+        <button className={styles.button} onClick={handleOnClick}>
+          View stores nearby
+        </button>
+      </div>
     </div>
   );
 };

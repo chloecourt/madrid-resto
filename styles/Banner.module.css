@@ -1,13 +1,15 @@
 .container {
-  margin-bottom: 1rem;
+  margin-bottom: 6rem;
+  position: relative;
+  z-index: 2;
 }
 
 .title {
   letter-spacing: -0.025em;
   font-weight: 800;
   color: var(--text-white-100);
-  font-size: 3rem;
-  line-heigth: 1;
+  font-size: 3rem /* 48px */;
+  line-height: 1;
 }
 
 .title1 {
