@@ -26,6 +26,10 @@
   justify-content: center;
 }
 
+.sectionTitle {
+  margin: 1rem 0;
+}
+
 @media (min-width: 640px) {
   .cardLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));

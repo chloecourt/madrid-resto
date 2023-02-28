@@ -31,7 +31,9 @@ export default function Home(props: any) {
             console.log("clicked");
           }}
         />
-        {props.mockData.length && <h2>Justicia</h2>}
+        {props.mockData.length && (
+          <h2 className={styles.sectionTitle}>Justicia</h2>
+        )}
         <section className={styles.cardLayout}>
           {props.mockData.map((resto: any) => {
             const { name, imgUrl, id, websiteUrl: href } = resto;
