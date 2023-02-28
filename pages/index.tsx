@@ -1,12 +1,19 @@
 import Head from "next/head";
-// import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Banner from "@/components/Banner";
+import { clsx } from "clsx";
+import Card from "@/components/Card/Card";
+import mockData from "../data/mockData.json";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+export async function getStaticProps(context: any) {
+  return {
+    props: {
+      mockData,
+    },
+  };
+}
+export default function Home(props: any) {
+  console.log("props: ", props);
   return (
     <>
       <Head>
@@ -24,6 +31,22 @@ export default function Home() {
             console.log("clicked");
           }}
         />
+        {props.mockData.length && <h2>Justicia</h2>}
+        <section className={styles.cardLayout}>
+          {props.mockData.map((resto: any) => {
+            const { name, imgUrl, id, websiteUrl: href } = resto;
+            return (
+              <Card
+                key={id}
+                name={name}
+                imgUrl={imgUrl}
+                href={`restaurant/${id}`}
+                alt={`${name} restaurant`}
+                // className={styles.card}
+              />
+            );
+          })}
+        </section>
       </main>
     </>
   );
