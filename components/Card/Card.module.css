@@ -17,6 +17,7 @@
   padding-left: 1rem /* 16px */;
   padding-right: 1rem /* 16px */;
   backdrop-filter: blur(10px);
+  width: 18.45rem; /* glass border extending too far*/
 }
 
 .cardHeaderWrapper {
