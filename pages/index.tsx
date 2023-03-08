@@ -12,8 +12,7 @@ export async function getStaticProps(context: any) {
     },
   };
 }
-export default function Home(props: any) {
-  console.log("props: ", props);
+export default function Home({ mockData }: any) {
   return (
     <>
       <Head>
@@ -31,11 +30,11 @@ export default function Home(props: any) {
             console.log("clicked");
           }}
         />
-        {props.mockData.length && (
-          <h2 className={styles.sectionTitle}>Justicia</h2>
+        {mockData.length && (
+          <h2 className={styles.locationHeading}>Justicia</h2>
         )}
         <section className={styles.cardLayout}>
-          {props.mockData.map((resto: any) => {
+          {mockData.map((resto: any) => {
             const { name, imgUrl, id, websiteUrl: href } = resto;
             return (
               <Card
@@ -44,7 +43,6 @@ export default function Home(props: any) {
                 imgUrl={imgUrl}
                 href={`restaurant/${id}`}
                 alt={`${name} restaurant`}
-                // className={styles.card}
               />
             );
           })}

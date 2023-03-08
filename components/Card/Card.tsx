@@ -12,24 +12,26 @@ type CardProps = {
 };
 const Card = ({ name, imgUrl, href, alt }: CardProps) => {
   return (
-    <Link href={href}>
-      <div className={styles.cardLink}>
-        <div className={clsx(styles.container, "glass")}>
-          <div className={styles.cardHeaderWrapper}>
-            <h2 className={styles.cardHeader}>{name}</h2>
-          </div>
-          <div className={styles.cardImageWrapper}>
-            <Image
-              className={styles.cardImage}
-              src={imgUrl}
-              width={260}
-              height={160}
-              alt={alt}
-            />
+    <div className={styles.card}>
+      <Link href={href}>
+        <div className={styles.cardLink}>
+          <div className={clsx(styles.container, "glass")}>
+            <div className={styles.cardHeaderWrapper}>
+              <h2 className={styles.cardHeader}>{name}</h2>
+            </div>
+            <div className={styles.cardImageWrapper}>
+              <Image
+                className={styles.cardImage}
+                src={imgUrl}
+                width={260}
+                height={160}
+                alt={alt}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
