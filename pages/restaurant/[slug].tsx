@@ -4,6 +4,7 @@ import Head from "next/head";
 import mockData from "../../data/mockData.json";
 import styles from "../../styles/Restaurant.module.css";
 import Image from "next/image";
+import clsx from "clsx";
 
 export async function getStaticProps({ params }: any) {
   return {
@@ -25,6 +26,10 @@ export async function getStaticPaths() {
   };
 }
 
+const handleUpvoteButton = () => {
+  console.log("handleUpvoteButton was pressed");
+};
+
 const Restaurant = ({ data }: any) => {
   const { name, address, neighbourhood, imgUrl } = data;
   const router = useRouter();
@@ -38,17 +43,55 @@ const Restaurant = ({ data }: any) => {
       <Head>
         <title>{name}</title>
       </Head>
-      <div className={styles.col1}>
-        <Link href="/" scroll={false}>
-          Back to Home
-        </Link>
-        <h1>{name}</h1>
-        <Image src={imgUrl} width={600} height={360} alt="restaurant image" />
-      </div>
-      <div className={styles.col2}>
-        <p>{neighbourhood}</p>
-        <br></br>
-        <p>{address}</p>
+      <div className={styles.container}>
+        <div className={styles.col1}>
+          <Link href="/" scroll={false}>
+            Back to Home
+          </Link>
+          <div className={styles.nameWrapper}>
+            <h1>{name}</h1>
+          </div>
+          <Image
+            className={styles.storeImg}
+            src={imgUrl}
+            width={600}
+            height={360}
+            alt={name}
+          />
+        </div>
+        <div className={clsx(styles.col2, "glass")}>
+          <div className={styles.iconWrapper}>
+            <Image
+              src="/static/icons/places.svg"
+              alt="places icon"
+              width="24"
+              height="24"
+            />
+            <p className={styles.text}>{address}</p>
+          </div>
+          <div className={styles.iconWrapper}>
+            <Image
+              src="/static/icons/nearMe.svg"
+              alt="near me icon"
+              width="24"
+              height="24"
+            />
+            <p className={styles.text}>{neighbourhood}</p>
+          </div>
+          <div className={styles.iconWrapper}>
+            <Image
+              src="/static/icons/star.svg"
+              alt="star"
+              width="24"
+              height="24"
+            />
+            <p className={styles.text}>1</p>
+          </div>
+          <p>{address}</p>
+        </div>
+        <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
+          Up Vote{" "}
+        </button>
       </div>
     </div>
   );
