@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import mockData from "../../data/mockData.json";
+import styles from "../../styles/Restaurant.module.css";
+import Image from "next/image";
 
 export async function getStaticProps({ params }: any) {
-  console.log("params: ", params);
   return {
     props: {
       data: mockData.find((data: any) => data.id === Number(params.slug)),
@@ -25,8 +26,7 @@ export async function getStaticPaths() {
 }
 
 const Restaurant = ({ data }: any) => {
-  console.log("props.data: ", data);
-  const { name, address, neighbourhood } = data;
+  const { name, address, neighbourhood, imgUrl } = data;
   const router = useRouter();
 
   if (router.isFallback) {
@@ -34,18 +34,22 @@ const Restaurant = ({ data }: any) => {
   }
 
   return (
-    <div>
+    <div className={styles.layout}>
       <Head>
         <title>{name}</title>
       </Head>
-      <Link href="/" scroll={false}>
-        Back to Home
-      </Link>
-      <h1>{name}</h1>
-      <br></br>
-      <p>{neighbourhood}</p>
-      <br></br>
-      <p>{address}</p>
+      <div className={styles.col1}>
+        <Link href="/" scroll={false}>
+          Back to Home
+        </Link>
+        <h1>{name}</h1>
+        <Image src={imgUrl} width={600} height={360} alt="restaurant image" />
+      </div>
+      <div className={styles.col2}>
+        <p>{neighbourhood}</p>
+        <br></br>
+        <p>{address}</p>
+      </div>
     </div>
   );
 };

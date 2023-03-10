@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
-import Banner from "@/components/Banner";
+import Banner from "@/components/Banner/Banner";
 import { clsx } from "clsx";
 import Card from "@/components/Card/Card";
 import mockData from "../data/mockData.json";
