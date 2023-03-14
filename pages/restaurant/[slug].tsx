@@ -6,14 +6,14 @@ import styles from "../../styles/Restaurant.module.css";
 import Image from "next/image";
 import clsx from "clsx";
 
+//first declare getStaticProps and then find the object with the identical id/ slug as the params. Thanks to useRouter we can access the params.
 export async function getStaticProps({ params }: any) {
   return {
     props: {
       data: mockData.find((data: any) => data.id === Number(params.slug)),
     },
   };
-}
-
+} // allows you to pre-render paths specified below. You can dynamically state static path by mapping the data
 export async function getStaticPaths() {
   const paths = mockData.map((data) => {
     return { params: { slug: String(data.id) } };
@@ -22,7 +22,7 @@ export async function getStaticPaths() {
     // paths: [{ params: { slug: "0" } }, { params: { slug: "1" } }],
     paths,
     fallback: true,
-    // if fallback is false, that means that if a dynamic router is not included in paths and you search for it you will get a 404. If fallbakc is true and you search for a dynamic route not listed in paths, the user will be able to request it from the server. However, to do so, you need to add an if statement to return a loading state the time that the server fetches these uncached files see line 27
+    // if fallback is false, that means that if a dynamic router is not included in paths and you search for it you will get a 404. If fallback is true and you search for a dynamic route not listed in paths, the user will be able to request it from the server. However, to do so, you need to add an if statement to return a loading state the time that the server fetches these uncached files see line 27
   };
 }
 
@@ -34,6 +34,7 @@ const Restaurant = ({ data }: any) => {
   const { name, address, neighbourhood, imgUrl } = data;
   const router = useRouter();
 
+  // loading state when fetching from the server
   if (router.isFallback) {
     return <div>loading...</div>;
   }
