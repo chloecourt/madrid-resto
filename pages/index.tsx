@@ -3,14 +3,15 @@ import styles from "@/styles/Home.module.css";
 import Banner from "@/components/Banner/Banner";
 import { clsx } from "clsx";
 import Card from "@/components/Card/Card";
-import mockData from "../data/mockData.json";
+// import mockData from "../data/mockData.json";
 
+// getStaticProps is only visible on server side therefore any env variables need to be in the next config
 export async function getStaticProps(context: any) {
   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: "fsq3boRbY72zaaGzGWe2QslhgNW7Xiyoq/KNJk/0BJ3uod0=",
+      Authorization: process.env.FOURSQUARE_API_KEY!,
     },
   };
   try {
@@ -20,6 +21,7 @@ export async function getStaticProps(context: any) {
     );
     const fourSquareData = await response.json();
     const { results } = fourSquareData;
+
     if (!results) {
       throw console.error();
     }
@@ -32,7 +34,9 @@ export async function getStaticProps(context: any) {
     console.error(err);
   }
 }
+
 export default function Home({ restaurants }: any) {
+  console.log({ restaurants });
   return (
     <>
       <Head>
@@ -54,15 +58,15 @@ export default function Home({ restaurants }: any) {
           <h2 className={styles.locationHeading}>Justicia</h2>
         )}
         <section className={styles.cardLayout}>
-          {restaurants.map((resto: any) => {
-            const { name, imgUrl, fsq_id: id, websiteUrl: href } = resto;
+          {restaurants.map((restaurant: any) => {
+            const { name, imgUrl, fsq_id: id } = restaurant;
             return (
               <Card
                 key={id}
                 name={name}
                 imgUrl={imgUrl || "/static/restaurantDummyImage.jpg"}
-                // href={`restaurant/${id}`}
-                alt={`${name} restaurant`}
+                href={`/restaurant/${id}`}
+                alt={name}
               />
             );
           })}
