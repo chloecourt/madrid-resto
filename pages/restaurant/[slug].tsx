@@ -33,6 +33,7 @@ const handleUpvoteButton = () => {
 const Restaurant = ({ data }: any) => {
   const { name, address, neighbourhood, imgUrl } = data;
   const router = useRouter();
+  console.log({ router });
 
   // loading state when fetching from the server
   if (router.isFallback) {
