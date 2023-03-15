@@ -6,14 +6,13 @@ import clsx from "clsx";
 type CardProps = {
   name: string;
   imgUrl: string;
-  href?: string;
+  href: string;
   alt: string;
-  // className?: string;
 };
 const Card = ({ name, imgUrl, href, alt }: CardProps) => {
   return (
     <div className={styles.card}>
-      <Link href={href || "www.google.com"}>
+      <Link href={href}>
         <div className={styles.cardLink}>
           <div className={clsx(styles.container, "glass")}>
             <div className={styles.cardHeaderWrapper}>
