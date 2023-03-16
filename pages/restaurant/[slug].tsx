@@ -1,22 +1,30 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import mockData from "../../data/mockData.json";
 import styles from "../../styles/Restaurant.module.css";
 import Image from "next/image";
 import clsx from "clsx";
+import { fetchRestaurants } from "@/lib/fetchRestaurants";
 
 //first declare getStaticProps and then find the object with the identical id/ slug as the params. Thanks to useRouter we can access the params.
 export async function getStaticProps({ params }: any) {
+  const restaurants = await fetchRestaurants();
   return {
     props: {
-      data: mockData.find((data: any) => data.id === Number(params.slug)),
+      restaurants: restaurants.find(
+        (data: any) => data.fsq_id.toString() === params.slug
+      ),
     },
   };
 } // allows you to pre-render paths specified below. You can dynamically state static path by mapping the data
 export async function getStaticPaths() {
-  const paths = mockData.map((data) => {
-    return { params: { slug: String(data.id) } };
+  const restaurants = await fetchRestaurants();
+  const paths = restaurants.map((data: any) => {
+    return {
+      params: {
+        slug: data.fsq_id.toString(),
+      },
+    };
   });
   return {
     // paths: [{ params: { slug: "0" } }, { params: { slug: "1" } }],
@@ -30,8 +38,8 @@ const handleUpvoteButton = () => {
   console.log("handleUpvoteButton was pressed");
 };
 
-const Restaurant = ({ data }: any) => {
-  const { name, address, neighbourhood, imgUrl } = data;
+const Restaurant = ({ restaurants }: any) => {
+  const { name, address, neighbourhood, imgUrl } = restaurants;
   const router = useRouter();
   console.log({ router });
 
@@ -55,7 +63,7 @@ const Restaurant = ({ data }: any) => {
           </div>
           <Image
             className={styles.storeImg}
-            src={imgUrl}
+            src={imgUrl || "/static/restaurantDummyImage.jpg"}
             width={600}
             height={360}
             alt={name}
