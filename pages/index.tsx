@@ -3,36 +3,17 @@ import styles from "@/styles/Home.module.css";
 import Banner from "@/components/Banner/Banner";
 import { clsx } from "clsx";
 import Card from "@/components/Card/Card";
+import { fetchRestaurants } from "@/lib/fetchRestaurants";
 // import mockData from "../data/mockData.json";
 
 // getStaticProps is only visible on server side therefore any env variables need to be in the next config
 export async function getStaticProps(context: any) {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: process.env.FOURSQUARE_API_KEY!,
+  const restaurants = await fetchRestaurants();
+  return {
+    props: {
+      restaurants,
     },
   };
-  try {
-    const response = await fetch(
-      "https://api.foursquare.com/v3/places/search?query=restaurants&near=Madrid%2C%20Spain&sort=RELEVANCE&limit=10",
-      options
-    );
-    const fourSquareData = await response.json();
-    const { results } = fourSquareData;
-
-    if (!results) {
-      throw console.error();
-    }
-    return {
-      props: {
-        restaurants: results,
-      },
-    };
-  } catch (err) {
-    console.error(err);
-  }
 }
 
 export default function Home({ restaurants }: any) {
