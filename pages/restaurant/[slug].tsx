@@ -12,7 +12,7 @@ export async function getStaticProps({ params }: any) {
   return {
     props: {
       restaurants: restaurants.find(
-        (data: any) => data.fsq_id.toString() === params.slug
+        (data: any) => data.id.toString() === params.slug
       ),
     },
   };
@@ -22,7 +22,7 @@ export async function getStaticPaths() {
   const paths = restaurants.map((data: any) => {
     return {
       params: {
-        slug: data.fsq_id.toString(),
+        slug: data.id.toString(),
       },
     };
   });
@@ -39,14 +39,13 @@ const handleUpvoteButton = () => {
 };
 
 const Restaurant = ({ restaurants }: any) => {
-  const { name, address, neighbourhood, imgUrl } = restaurants;
   const router = useRouter();
-  console.log({ router });
-
   // loading state when fetching from the server
   if (router.isFallback) {
     return <div>loading...</div>;
   }
+
+  const { name, address, neighborhood, imgUrl } = restaurants;
 
   return (
     <div className={styles.layout}>
@@ -59,7 +58,7 @@ const Restaurant = ({ restaurants }: any) => {
             Back to Home
           </Link>
           <div className={styles.nameWrapper}>
-            <h1>{name}</h1>
+            <h1>{name || ""}</h1>
           </div>
           <Image
             className={styles.storeImg}
@@ -86,7 +85,7 @@ const Restaurant = ({ restaurants }: any) => {
               width="24"
               height="24"
             />
-            <p className={styles.text}>{neighbourhood}</p>
+            <p className={styles.text}>{neighborhood}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image
@@ -95,13 +94,13 @@ const Restaurant = ({ restaurants }: any) => {
               width="24"
               height="24"
             />
-            <p className={styles.text}>1</p>
+            <p className={styles.text}>{1}</p>
           </div>
-          <p>{address}</p>
+          {/* <p>{1}</p> */}
+          <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
+            Up Vote
+          </button>
         </div>
-        <button className={styles.upvoteButton} onClick={handleUpvoteButton}>
-          Up Vote{" "}
-        </button>
       </div>
     </div>
   );
