@@ -17,7 +17,6 @@ export async function getStaticProps(context: any) {
 }
 
 export default function Home({ restaurants }: any) {
-  console.log({ restaurants });
   return (
     <>
       <Head>
@@ -40,7 +39,7 @@ export default function Home({ restaurants }: any) {
         )}
         <section className={styles.cardLayout}>
           {restaurants.map((restaurant: any) => {
-            const { name, imgUrl, fsq_id: id } = restaurant;
+            const { name, imgUrl, id } = restaurant;
             return (
               <Card
                 key={id}
