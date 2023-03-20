@@ -1,10 +1,9 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import Banner from "@/components/Banner/Banner";
-import { clsx } from "clsx";
 import Card from "@/components/Card/Card";
 import { fetchRestaurants } from "@/lib/fetchRestaurants";
-// import mockData from "../data/mockData.json";
+import useGeolocation from "@/hooks/useGeolocation";
 
 // getStaticProps is only visible on server side therefore any env variables need to be in the next config
 export async function getStaticProps(context: any) {
@@ -17,6 +16,9 @@ export async function getStaticProps(context: any) {
 }
 
 export default function Home({ restaurants }: any) {
+  const { handleTrackLocation, latLong, locationErrorMsg, isLoadingLocation } =
+    useGeolocation();
+
   return (
     <>
       <Head>
@@ -30,8 +32,10 @@ export default function Home({ restaurants }: any) {
       </Head>
       <main className={styles.main}>
         <Banner
+          buttonText={isLoadingLocation ? "loading" : "view stores nearby"}
           handleOnClick={() => {
-            console.log("clicked");
+            console.log("location button clicked");
+            handleTrackLocation();
           }}
         />
         {restaurants.length && (

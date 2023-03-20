@@ -3,9 +3,10 @@ import styles from "./Banner.module.css";
 
 type BannerType = {
   handleOnClick: () => void;
+  buttonText: string;
 };
 
-const Banner = ({ handleOnClick }: BannerType) => {
+const Banner = ({ handleOnClick, buttonText }: BannerType) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -15,7 +16,7 @@ const Banner = ({ handleOnClick }: BannerType) => {
       <p className={styles.subTitle}>discover local must-try restaurants!</p>
       <div className={styles.buttonWrapper}>
         <button className={styles.button} onClick={handleOnClick}>
-          View stores nearby
+          {buttonText}
         </button>
       </div>
     </div>

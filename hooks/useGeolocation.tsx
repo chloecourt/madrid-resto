@@ -3,28 +3,37 @@ import { useState } from "react";
 const useGeolocation = () => {
   const [locationErrorMsg, setLocationErrorMsg] = useState("");
   const [latLong, setLatLong] = useState("");
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
 
   const success = (position: any) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
-    // success function
+    setLatLong(`${latitude},${longitude}`);
+    setLocationErrorMsg("");
   };
   const error = () => {
-    alert(
+    setLocationErrorMsg(
       "Sorry this feature is unavailable right now, please try again later."
     );
   };
 
-  if (!navigator.geolocation) {
-    // change button text to say unable to retrieve your location
-  } else {
-    // button text needs to be loading
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
+  const handleTrackLocation = () => {
+    setIsLoadingLocation(true);
+    if (!navigator.geolocation) {
+      setLocationErrorMsg("your location could not be found");
+    } else {
+      // button text needs to be loading
+      navigator.geolocation.getCurrentPosition(success, error);
+    }
+    setIsLoadingLocation(false);
+  };
 
-  const handleFindGeolocation = () => {
-    //
+  return {
+    latLong,
+    handleTrackLocation,
+    locationErrorMsg,
+    isLoadingLocation,
   };
 };
 
