@@ -19,6 +19,10 @@ export default function Home({ restaurants }: any) {
   const { handleTrackLocation, latLong, locationErrorMsg, isLoadingLocation } =
     useGeolocation();
 
+  console.log({ latLong });
+  console.log({ locationErrorMsg });
+  console.log({ isLoadingLocation });
+
   return (
     <>
       <Head>
@@ -37,6 +41,7 @@ export default function Home({ restaurants }: any) {
             console.log("location button clicked");
             handleTrackLocation();
           }}
+          errorMsg={locationErrorMsg}
         />
         {restaurants.length && (
           <h2 className={styles.locationHeading}>Justicia</h2>

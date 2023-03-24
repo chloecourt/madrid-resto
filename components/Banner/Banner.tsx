@@ -4,9 +4,10 @@ import styles from "./Banner.module.css";
 type BannerType = {
   handleOnClick: () => void;
   buttonText: string;
+  errorMsg?: string;
 };
 
-const Banner = ({ handleOnClick, buttonText }: BannerType) => {
+const Banner = ({ handleOnClick, buttonText, errorMsg }: BannerType) => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>
@@ -18,6 +19,7 @@ const Banner = ({ handleOnClick, buttonText }: BannerType) => {
         <button className={styles.button} onClick={handleOnClick}>
           {buttonText}
         </button>
+        {errorMsg && <p className="">{errorMsg}</p>}
       </div>
     </div>
   );

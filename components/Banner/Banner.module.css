@@ -95,6 +95,7 @@
     line-height: 1.75rem /* 28px */;
     padding-left: 2.5rem /* 40px */;
     padding-right: 2.5rem /* 40px */;
+    width: 16rem;
   }
 }
 
@@ -127,5 +128,8 @@
 @media (min-width: 1280px) {
   .title2 {
     display: inline;
+  }
+  .button {
+    width: 16rem;
   }
 }

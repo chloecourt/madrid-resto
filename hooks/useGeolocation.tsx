@@ -11,8 +11,10 @@ const useGeolocation = () => {
 
     setLatLong(`${latitude},${longitude}`);
     setLocationErrorMsg("");
+    setIsLoadingLocation(false);
   };
   const error = () => {
+    setIsLoadingLocation(false);
     setLocationErrorMsg(
       "Sorry this feature is unavailable right now, please try again later."
     );
@@ -22,11 +24,11 @@ const useGeolocation = () => {
     setIsLoadingLocation(true);
     if (!navigator.geolocation) {
       setLocationErrorMsg("your location could not be found");
+      setIsLoadingLocation(false);
     } else {
       // button text needs to be loading
       navigator.geolocation.getCurrentPosition(success, error);
     }
-    setIsLoadingLocation(false);
   };
 
   return {
@@ -38,7 +40,3 @@ const useGeolocation = () => {
 };
 
 export default useGeolocation;
-
-export const getUserlocation = () => {
-  // const [geolocation, setGeolocation] = useState(null);
-};
