@@ -19,7 +19,7 @@ const Banner = ({ handleOnClick, buttonText, errorMsg }: BannerType) => {
         <button className={styles.button} onClick={handleOnClick}>
           {buttonText}
         </button>
-        {errorMsg && <p className="">{errorMsg}</p>}
+        <div>{errorMsg ? errorMsg : ""}</div>
       </div>
     </div>
   );
