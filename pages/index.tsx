@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import Banner from "@/components/Banner/Banner";
@@ -8,6 +9,7 @@ import useGeolocation from "@/hooks/useGeolocation";
 // getStaticProps is only visible on server side therefore any env variables need to be in the next config
 export async function getStaticProps(context: any) {
   const restaurants = await fetchRestaurants();
+
   return {
     props: {
       restaurants,
@@ -19,9 +21,21 @@ export default function Home({ restaurants }: any) {
   const { handleTrackLocation, latLong, locationErrorMsg, isLoadingLocation } =
     useGeolocation();
 
-  console.log({ latLong });
-  console.log({ locationErrorMsg });
-  console.log({ isLoadingLocation });
+  console.log({ latLong, locationErrorMsg });
+
+  useEffect(() => {
+    (async () => {
+      if (latLong) {
+        try {
+          const restos = await fetchRestaurants(latLong);
+          console.log({ restos });
+          // set restaurants
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    })();
+  }, [latLong]);
 
   return (
     <>
