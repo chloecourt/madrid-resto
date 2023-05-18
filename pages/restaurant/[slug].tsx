@@ -9,11 +9,12 @@ import { fetchRestaurants } from "@/lib/fetchRestaurants";
 //first declare getStaticProps and then find the object with the identical id/ slug as the params. Thanks to useRouter we can access the params.
 export async function getStaticProps({ params }: any) {
   const restaurants = await fetchRestaurants();
+  const findRestaurantsBySlug = restaurants.find(
+    (data: any) => data.id.toString() === params.slug
+  );
   return {
     props: {
-      restaurants: restaurants.find(
-        (data: any) => data.id.toString() === params.slug
-      ),
+      restaurants: findRestaurantsBySlug ? findRestaurantsBySlug : {},
     },
   };
 } // allows you to pre-render paths specified below. You can dynamically state static path by mapping the data
