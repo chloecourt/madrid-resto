@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import Banner from "@/components/Banner/Banner";
@@ -18,6 +18,11 @@ export async function getStaticProps(context: any) {
 }
 
 export default function Home({ restaurants }: any) {
+  const [newRestaurants, setNewRestaurants] = useState("");
+  const [newRestaurantsError, setNewRestaurantsError] = useState<string | null>(
+    null
+  );
+
   const { handleTrackLocation, latLong, locationErrorMsg, isLoadingLocation } =
     useGeolocation();
 
@@ -30,12 +35,42 @@ export default function Home({ restaurants }: any) {
           const restos = await fetchRestaurants(latLong);
           console.log({ restos });
           // set restaurants
-        } catch (e) {
-          console.log(e);
+          setNewRestaurants(restos);
+        } catch (error) {
+          if (error instanceof Error) {
+            setNewRestaurantsError(error.message);
+          }
         }
       }
     })();
   }, [latLong]);
+
+  // to create section with cards with either the default location or view nearby option
+  const createCards = (restaurantInput: any) => {
+    return (
+      <>
+        {restaurants.length && (
+          <h2 className={styles.locationHeading}>
+            {newRestaurants ? "restaurants near me" : "Justicia"}
+          </h2>
+        )}
+        <section className={styles.cardLayout}>
+          {restaurantInput.map((restaurant: any) => {
+            const { name, imgUrl, id } = restaurant;
+            return (
+              <Card
+                key={id}
+                name={name}
+                imgUrl={imgUrl || "/static/restaurantDummyImage.jpg"}
+                href={`/restaurant/${id}`}
+                alt={name}
+              />
+            );
+          })}
+        </section>
+      </>
+    );
+  };
 
   return (
     <>
@@ -50,30 +85,15 @@ export default function Home({ restaurants }: any) {
       </Head>
       <main className={styles.main}>
         <Banner
-          buttonText={isLoadingLocation ? "loading" : "view stores nearby"}
+          buttonText={isLoadingLocation ? "loading..." : "view stores nearby"}
           handleOnClick={() => {
             console.log("location button clicked");
             handleTrackLocation();
           }}
           errorMsg={locationErrorMsg}
         />
-        {restaurants.length && (
-          <h2 className={styles.locationHeading}>Justicia</h2>
-        )}
-        <section className={styles.cardLayout}>
-          {restaurants.map((restaurant: any) => {
-            const { name, imgUrl, id } = restaurant;
-            return (
-              <Card
-                key={id}
-                name={name}
-                imgUrl={imgUrl || "/static/restaurantDummyImage.jpg"}
-                href={`/restaurant/${id}`}
-                alt={name}
-              />
-            );
-          })}
-        </section>
+        {newRestaurants ? createCards(newRestaurants) : null}
+        {createCards(restaurants)}
       </main>
     </>
   );
