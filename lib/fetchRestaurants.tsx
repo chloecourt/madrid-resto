@@ -1,7 +1,7 @@
 import { createApi } from "unsplash-js";
 
 const unsplash = createApi({
-  accessKey: `${process.env.UNSPLASH_ACCESS_KEY}`,
+  accessKey: `${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`,
 });
 
 type GetUrlForRestaurantsParams = {
@@ -23,7 +23,7 @@ const getImgUrls = async () => {
       perPage: 30,
     });
     console.log({ photos });
-    const unsplashedResults = photos?.response?.results;
+    const unsplashedResults = photos.response?.results || [];
     if (!unsplashedResults) {
       throw Error("photo api images did not load");
     }
@@ -42,7 +42,7 @@ export const fetchRestaurants = async (
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization: process.env.FOURSQUARE_API_KEY!,
+      Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY!,
     },
   };
 
