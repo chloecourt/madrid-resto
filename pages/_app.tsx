@@ -33,7 +33,7 @@ export type AppContextType = {
   dispatch: React.Dispatch<LatLongAction>;
 };
 interface LatLongAction {
-  type: "SET_LAT_LONG" | "SET_RESTAURANTS";
+  type: string;
   payload: InitialStateType;
 }
 

@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ACTION_TYPES, AppContext } from "@/pages/_app";
 
 const useGeolocation = () => {
   const [locationErrorMsg, setLocationErrorMsg] = useState("");
   const [latLong, setLatLong] = useState("");
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
 
+  const appContext = useContext(AppContext);
+  const dispatch = appContext?.dispatch;
+
   const success = (position: any) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
     setLatLong(`${latitude},${longitude}`);
+    if (dispatch) {
+      dispatch({
+        type: ACTION_TYPES.SET_LAT_LONG,
+        payload: {
+          latLong: `${latitude},${longitude}`,
+          restaurants: [],
+        },
+      });
+    }
+
     setLocationErrorMsg("");
     setIsLoadingLocation(false);
   };
